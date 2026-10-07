@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="card shadow mb-4">
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Titre</th>
+            <th>Genre</th>
+            <th>Note</th>
+            <th>Date Sortie</th>
+            <th>Actions</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (film of films; track film.idFilm) {
+            <tr>
+              <td>{{film.idFilm}}</td>
+              <td>{{film.titreFilm}}</td>
+              <td>{{film.genreFilm}}</td>
+              <td>{{film.noteFilm}}</td>
+              <td>{{film.dateSortie | date:'dd/MM/yyyy'}}</td>
+              <td><a class="btn btn-danger" (click)="supprimerFilm(film)">Supprimer</a></td>
+              <td><a class="btn btn-success" [routerLink]="['/updateFilm', film.idFilm]">Modifier</a></td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="text-center">
+                <h3>Aucun film trouvé !</h3>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -4,13 +4,12 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>Id</th>
-            <th>Titre</th>
-            <th>Genre</th>
-            <th>Note</th>
+            <th>Id Film</th>
+            <th>Titre Film</th>
+            <th>Note Film</th>
             <th>Date Sortie</th>
-            <th>Actions</th>
-            <th></th>
+            <th>Genre</th>
+            <th colspan="2">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -18,9 +17,9 @@
             <tr>
               <td>{{film.idFilm}}</td>
               <td>{{film.titreFilm}}</td>
-              <td>{{film.genreFilm}}</td>
               <td>{{film.noteFilm}}</td>
               <td>{{film.dateSortie | date:'dd/MM/yyyy'}}</td>
+              <td>{{film.genre.nomGenre}}</td>
               <td><a class="btn btn-danger" (click)="supprimerFilm(film)">Supprimer</a></td>
               <td><a class="btn btn-success" [routerLink]="['/updateFilm', film.idFilm]">Modifier</a></td>
             </tr>

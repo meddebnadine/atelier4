@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Film } from '../model/film.model';
 import { FilmService } from '../services/film';
+import { Genre } from '../model/genre.model';
 
 @Component({
   selector: 'app-update-film',
@@ -14,6 +15,8 @@ import { FilmService } from '../services/film';
 export class UpdateFilmComponent implements OnInit {
 
   currentFilm = new Film();
+  genres!: Genre[];
+  updatedGenreId!: number;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -22,11 +25,28 @@ export class UpdateFilmComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const id = Number(this.activatedRoute.snapshot.params['id']);
-    this.currentFilm = this.filmService.consulterFilm(id);
+    this.genres = this.filmService.listeGenres();
+    this.currentFilm = this.filmService.consulterFilm(
+      this.activatedRoute.snapshot.params['id']
+    );
+    
+    // Conversion de la date pour l'input de type date (format YYYY-MM-DD)
+    if (this.currentFilm.dateSortie) {
+      const dateObj = new Date(this.currentFilm.dateSortie);
+      // On formate la date en YYYY-MM-DD
+      const year = dateObj.getFullYear();
+      const month = ('0' + (dateObj.getMonth() + 1)).slice(-2);
+      const day = ('0' + dateObj.getDate()).slice(-2);
+      
+      // On réassigne la date formatée sous forme de chaîne pour l'input
+      (this.currentFilm.dateSortie as any) = `${year}-${month}-${day}`;
+    }
+
+    this.updatedGenreId = this.currentFilm.genre.idGenre;
   }
 
-  updateFilm(): void {
+  updateFilm() {
+    this.currentFilm.genre = this.filmService.consulterGenre(this.updatedGenreId);
     this.filmService.updateFilm(this.currentFilm);
     this.router.navigate(['films']);
   }

@@ -9,9 +9,13 @@
       <label>Titre Film</label>
       <input type="text" [(ngModel)]="currentFilm.titreFilm" name="titreFilm" class="form-control">
     </div>
-    <div class="col-sm-2 col-md-2 col-lg-2">
-      <label>Genre Film</label>
-      <input type="text" [(ngModel)]="currentFilm.genreFilm" name="genreFilm" class="form-control">
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <label>Genre</label>
+      <select class="form-control form-control-lg" id="idGenre" name="idGenre" [(ngModel)]="updatedGenreId">
+        @for (g of genres; track g.idGenre) {
+          <option [value]="g.idGenre"> {{g.nomGenre}} </option>
+        }
+      </select>
     </div>
     <div class="col-sm-2 col-md-2 col-lg-2">
       <label>Note Film</label>

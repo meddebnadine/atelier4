@@ -3,6 +3,7 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Film } from '../model/film.model';
 import { FilmService } from '../services/film';
+import { Genre } from '../model/genre.model';
 
 @Component({
   selector: 'app-add-film',
@@ -11,14 +12,21 @@ import { FilmService } from '../services/film';
   templateUrl: './add-film.html',
 })
 export class Addfilm implements OnInit {
-  newfilm = new Film();
+  newFilm = new Film();
+  genres!: Genre[];       
+  newIdGenre!: number;
+  newGenre!: Genre;
 
   constructor(private filmService: FilmService, private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+      this.genres = this.filmService.listeGenres();
+  }
 
-  addfilm(): void {
-    this.filmService.ajouterFilm(this.newfilm);
+  addFilm() {
+    this.newGenre = this.filmService.consulterGenre(this.newIdGenre);
+    this.newFilm.genre = this.newGenre;
+    this.filmService.ajouterFilm(this.newFilm);
     this.router.navigate(['films']);
   }
 }

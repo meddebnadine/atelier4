@@ -1,17 +1,28 @@
 import { Injectable } from '@angular/core';
 import { Film } from '../model/film.model';
+import { Genre } from '../model/genre.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FilmService {
   films: Film[];
+  genres: Genre[];
 
   constructor() {
+    this.genres = [
+      { idGenre: 1, nomGenre: "Science-fiction" },
+      { idGenre: 2, nomGenre: "Drame" },
+      { idGenre: 3, nomGenre: "Action" }
+    ];
+
     this.films = [
-      { idFilm: 1, titreFilm: "Inception", genreFilm: "Science-Fiction", noteFilm: 9, dateSortie: new Date("07/14/2010") },
-      { idFilm: 2, titreFilm: "Le Parrain", genreFilm: "Drame", noteFilm: 9.5, dateSortie: new Date("03/24/1972") },
-      { idFilm: 3, titreFilm: "Gladiator", genreFilm: "Action", noteFilm: 8.5, dateSortie: new Date("05/05/2000") }
+      { idFilm: 1, titreFilm: "Inception", noteFilm: 9, dateSortie: new Date("01/01/2010"),
+        genre: { idGenre: 1, nomGenre: "Science-fiction" } },
+      { idFilm: 2, titreFilm: "Le Parrain", noteFilm: 9.5, dateSortie: new Date("03/24/1972"),
+        genre: { idGenre: 2, nomGenre: "Drame" } },
+      { idFilm: 3, titreFilm: "Gladiator", noteFilm: 8.5, dateSortie: new Date("05/05/2000"),
+        genre: { idGenre: 3, nomGenre: "Action" } }
     ];
   }
 
@@ -39,5 +50,12 @@ export class FilmService {
     if (index > -1) {
       this.films.splice(index, 1, f);
     }
+  }
+  listeGenres(): Genre[] {
+    return this.genres;
+  }
+
+  consulterGenre(id: number): Genre {
+    return this.genres.find(g => g.idGenre == id)!;
   }
 }
